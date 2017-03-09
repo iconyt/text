@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<script src="jquery.js"></script>
+		<script>
+			  //先用定位将图片定位在一起
+		</script>
+		<style>
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background-color:lightsteelblue;
+			perspective: 800px;
+		}
+	  #wrap{
+	  	 height:400px;
+	  	 width:300px;
+	  	 /*border-radius:50%;*/
+	  	 background-color:pink;
+	  	 transform-style:preserve-3d;
+	  	 position:relative;
+	  	 border:1px solid red;
+	  	 margin-left:1200px;
+	  	  
+	}
+	  img{
+	  	 height:300px;
+	  	 width:200px;
+	     position:absolute;
+	     left:0;
+	     top:0;
+	     -webkit-box-reflect: below 1px linear-gradient(transparent,transparent 0,rgba(0,0,0,0.5));
+	     transition:all 1s;
+	  }
+		</style>
+		<script>
+			 $(function(){
+			 	var a;
+			 	  //让wrap自适应居中
+			 	  function mtop(){
+			 	  	  $("#wrap").css("top",window.outerHeight/2-200);
+//			 	  	  $("#wrap").css("left",window.outerWidth/2-150)
+			 	  }
+			 	  mtop();
+			 	  //浏览器发生改变时调用
+			 	  window.onresize=mtop();
+			 	//设置每个图片的旋转角度
+			 	var len=$("img").length;
+			 	for(var i=0;i<len;i++){
+			 		   //设置旋转角度
+			 		    a =(len-1-i)*0.1;
+			 		   $("img").eq(i).css({"transform":"rotateY("+parseInt((360/len)*i)+"deg) translateZ(500px)"});
+			 		   //设置出场顺序,最后一张图片最后出现，延迟最久
+//			 		    $("img").eq(10).css("transition","all 1s 1s");
+//			 		    $("img").eq(9).css("transition","all 1s 0.9s");
+//			 		    $("img").eq(8).css("transition","all 1s 0.8s");
+//			 		    $("img").eq(7).css("transition","all 1s 0.7s");
+			 		  
+//			 		    console.log("all 1s "  +a+"s");
+//			 		    console.log()
+			 		   $("img").eq(i).css("transition","all 1s "+a+"s");
+				
+			 	}
+			 	//好，现在开始旋转，拖拽
+			 	var lastx=0;
+			 	var lasty=0;
+			 	var moveX = 0;
+			 	var moveY = 0;
+			 	var disx;
+			 	var disy
+			document.onmousedown=function(event){
+			 		var oEvent=event||evt;
+			 		disx = oEvent.clientX;
+			 		disy = oEvent.clientY;
+			   this.onmousemove=function(event){
+			       
+			   	   var oEvent=event||evt;
+			   	   oEvent.preventDefault();
+			   	   moveX -= (oEvent.clientY-disy);
+			   	   moveY += (oEvent.clientX-disx);
+			   	   disx = oEvent.clientX;
+			   	   disy = oEvent.clientY;
+			   	   //移动过程中，x轴滑动的距离就是wrap往y轴旋转 的角度
+			   	   //移动过程中，y轴滑动的距离就是wrap往x轴旋转 的角度
+     $("#wrap").css("transform","rotateY("+moveY*0.1+"deg) rotateX("+moveX*0.1+"deg)")
+			  this.onmouseup=function(event){
+			  	   var oEvent=event||evt;
+			  	  this.onmouseup=null;
+			  	  this.onmousemove=null;
+			  	  //记录放手的位置
+//			  	 lastx=oEvent.clientX;
+//			  	 lasty=oEvent.clientY;
+			  }
+			 	}
+			} 	
+			 	
+			 })
+		</script>
+	</head>
+	<body>
+		<div id='wrap'>
+			 <img src="img/11.jpg">
+			 <img src="img/2.jpg">
+			 <img src="img/3.jpg">
+			 <img src="img/4.jpg">
+			 <img src="img/5.jpg">
+			 <img src="img/6.jpg">
+			 <img src="img/7.jpg">
+			 <img src="img/8.jpg">
+			  <img src="img/9.jpg">
+			 <img src="img/10.jpg">
+			 <img src="img/11.jpg">
+		</div>
+	</body>
+</html>

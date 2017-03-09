@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+           <script src="jquery.js"></script>
+				<style type="text/css">
+
+		*{
+			margin:0;
+			padding:0;
+		}
+		body{
+			background-color:lightsteelblue;
+			perspective: 800px;
+		}
+	  #wrap{
+	  	 height:300px;
+	  	 width:200px;
+	     transform-style:preserve-3d;
+	  	 position:relative;
+	    margin-left:1200px;
+	  	transition:all 1s;
+	  	  
+	}
+	  img{
+	  	 height:300px;
+	  	 width:200px;
+	     position:absolute;
+	     left:0;
+	     top:0;
+	    transition:all 1s;
+	  }
+		</style>
+		<script>
+			 $(function(){
+			 	var dd=0;
+			 	   function mtop(){
+			 	  	  $("#wrap").css("top",window.outerHeight/2-200);
+			 	  }
+			 	  mtop();
+			 	  //浏览器发生改变时调用
+			 	  window.onresize=mtop();
+			 	//设置每个图片的旋转角度
+			 	var len=$("img").length;
+			 	for(var i=0;i<len;i++){			 		
+			 $("img").eq(i).attr("style","transform :rotateY("+parseInt((360/len)*i)+"deg) translateZ(500px)");
+
+			 	}
+			 	//让他自己轮播
+			 setInterval(function(){
+			 	dd=dd+360/len;
+	     $("#wrap").css("transform","rotateY("+dd+"deg)")
+			 },1000)
+			 
+			 })
+		</script>
+	</head>
+	<body>
+	
+		 <div id='wrap'>
+			 <img src="img/11.jpg">
+			 <img src="img/2.jpg">
+			 <img src="img/3.jpg">
+			 <img src="img/4.jpg">
+			 <img src="img/5.jpg">
+			 <img src="img/6.jpg">
+		</div>
+	
+	</body>
+</html>
